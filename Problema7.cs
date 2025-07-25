@@ -77,7 +77,7 @@ namespace TesteDeMesa3
             Console.WriteLine($"Valor Presente Investido: {valorPresente:C}");
             Console.WriteLine($"Taxa de Juros Mensal: {taxaMensal:P2}");
             Console.WriteLine($"Rendimento Total: {rendimentoTotal:C}");
-            Console.WriteLine($"Saldo Líquido Restante: {saldo:C}");
+            Console.WriteLine($"Saldo Líquido: {saldo:C}");
         }
     }
 }
