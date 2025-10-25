@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Security.Cryptography.X509Certificates;
@@ -14,47 +15,51 @@ namespace TesteDeMesa3
         public static void Exec()
         {
 
-            //PROBLEMA 6:	Crie uma Tabela e Programa C# que leia um menu para diversos valores da Entrada. 8 meses e 10 dias
-
-            List<decimal> list = new List<decimal>();
-            List<decimal> taxas = [0.03m/30, 0.0248m/30, 0.02m/30];
-
-            decimal p;
-            int mes = (8*30)+10;
-            decimal fator = 1;
+            List<decimal> taxasMensais = [0.03m, 0.0248m, 0.02m];
+            List<decimal> valores = new List<decimal>();
 
             int esc = 1;
 
             while (esc != 0)
             {
-                Console.WriteLine($"Adicione o valor presentes");
-                p = decimal.Parse(Console.ReadLine());
-                list.Add(p);
+                Console.Write("Digite o valor presente investido: ");
+                decimal valor = decimal.Parse(Console.ReadLine());
+                valores.Add(valor);
 
-                Console.WriteLine($"Deseja adicionar mais? 1 para sim e 0 para nao");
+                Console.Write("Deseja adicionar mais valores? 1 sim / 0 não: ");
                 esc = int.Parse(Console.ReadLine());
             }
 
+            DateTime dataInicial = DateTime.Today;
+            DateTime dataFinal = dataInicial.AddMonths(8).AddDays(10);
 
-            foreach (int vp in list)
+            int totalDias = (dataFinal - dataInicial).Days;
+
+            Console.WriteLine("\n================================================================\n");
+
+            foreach (decimal vp in valores)
             {
-                Console.WriteLine($"=============================================================================");
-                foreach (decimal taxa in taxas)
+                Console.WriteLine($"Valor Presente: {vp:C}\n");
+
+                foreach (decimal taxaMensal in taxasMensais)
                 {
-                    
-                    fator = 1;
-                    decimal somaTaxa = taxa + 1;
-                    for (int j = 1; j <= mes; j++)
+                    decimal taxaDiaria = taxaMensal / 30m;
+                    decimal saldo = vp;
+
+                    for (int i = 0; i < totalDias; i++)
                     {
-                        fator *= somaTaxa;
-
+                        saldo *= (1 + taxaDiaria);
                     }
-                    decimal F = vp * fator;
-                    Console.WriteLine($"| valor investido: {vp:C} | valor futuro é : {F:C} | taxa ao dia: {taxa} |");
 
+                    Console.WriteLine($"  Taxa mensal: {taxaMensal:P2}");
+                    Console.WriteLine($"  dias: {totalDias} ");
+                    Console.WriteLine($"  Valor Futuro: {saldo:C}\n");
                 }
+
+                Console.WriteLine("------------------------------------------------------------\n");
             }
-            
+
+            Console.WriteLine("=======================================================================");
         }
     }
 }
